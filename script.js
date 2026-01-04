@@ -115,16 +115,26 @@ document.addEventListener("DOMContentLoaded", async () => {
       totalCurrent += currentValue;
   
       portfolioEl.innerHTML += `
-        <div class="asset">
-          <div>
-            <div class="asset-name">${scheme.schemeName}</div>
-            <div class="label">NAV (${latest.date.toISOString().split("T")[0]}): ₹${latest.nav}</div>
+      <div class="asset">
+        <div class="asset-left">
+          <div class="asset-name">${scheme.schemeName}</div>
+    
+          <div class="asset-meta">
+            <span>Invested: ₹${fund.invested.toLocaleString()}</span>
+            <span>Current: ₹${currentValue.toFixed(0).toLocaleString()}</span>
           </div>
-          <div class="asset-pl ${pl >= 0 ? "positive" : "negative"}">
-            ${pl >= 0 ? "+" : ""}₹${pl.toFixed(0)}
+    
+          <div class="label">
+            NAV (${latest.date.toISOString().split("T")[0]}): ₹${latest.nav}
           </div>
         </div>
-      `;
+    
+        <div class="asset-pl ${pl >= 0 ? "positive" : "negative"}">
+          ${pl >= 0 ? "+" : ""}₹${pl.toFixed(0)}
+        </div>
+      </div>
+    `;
+    
     }
   
     /* =========================
