@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - if [ -f package.json ]; then npm install; fi
+
+  build:
+    commands:
+      - echo Building project...
+      - if [ -f package.json ]; then npm run build; fi
+
+  post_build:
+    commands:
+      - echo Uploading files to S3...
+      - aws s3 sync ./ s3://shibu-frontend-devops-site --delete
+
+      - echo Clearing CloudFront cache...
+      - aws cloudfront create-invalidation \
+        --distribution-id E3KS9WYF0MNG71 \
+        --paths "/*"
+
+artifacts:
+  files:
+    - '**/*'
